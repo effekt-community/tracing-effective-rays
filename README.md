@@ -21,13 +21,19 @@ The aim of this project was to implement a simple raytracer based on [_Ray Traci
 
 ### Example renders
 
-<div style="display: grid; grid-template-columns: 32% 32% 32%; column-gap: 5px; text-align: center;">
-   <img src="example-renders/final_10_2.jpg">
-   <img src="example-renders/final_50_5.jpg">
-   <img src="example-renders/final_100_10.jpg">
-   <p>10 samples, 2 bounces</p>
-   <p>50 samples, 5 bounces</p>
-   <p>100 samples, 10 bounces</p>
+<div style="display: grid; grid-template-columns: 100%; column-gap: 5px; text-align: center;">
+   <div>
+    <img src="example-renders/final_10_2.jpg">
+    <p>10 samples, 2 bounces</p>
+  </div>
+  <div>
+    <img src="example-renders/final_50_5.jpg">
+    <p>50 samples, 5 bounces</p>
+   </div>
+   <div>
+    <img src="example-renders/final_100_10.jpg">
+    <p>100 samples, 10 bounces</p>
+   </div>
 </div>
 
 ![Hollow glass](example-renders/hollow-glass.jpg)
