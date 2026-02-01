@@ -19,6 +19,8 @@ The aim of this project was to implement a simple raytracer based on [_Ray Traci
 
 "src/main.effekt" contains the scene, camera & rendering parameters that can be customized. The program will render an image based on the parameters and produce an image at "out.ppm".
 
+"src/demo.effekt" contains some examples on how this project works. It is recommended to start a repl using `effekt --backend llvm`, import the demo file with `import src/demo` and then run one of the demo functions `demo1()` etc. which will produce an image corresponding to their name in the project root.
+
 ### Example renders
 
 <div style="display: grid; grid-template-columns: 100%; column-gap: 5px; text-align: center;">
@@ -112,6 +114,7 @@ nix build
 - `src/`: Contains the source code
   - `main.effekt`: Main entry point
   - `test.effekt`: Entry point for tests
+  - `demo.effekt`: Contains demo renders
   - `lib/`: Library code imported by `main` and `test`
 - `flake.nix`: Package configuration in a Nix flake
 - `flake.lock`: Auto-generated lockfile for dependencies
