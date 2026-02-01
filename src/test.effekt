@@ -1,7 +1,6 @@
 module src/test
 
 import test
-import src/lib
 
 import src/test/vec3_test
 import src/test/integration_test
