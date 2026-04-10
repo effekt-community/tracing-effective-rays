@@ -4,23 +4,23 @@ import random
 
 record Vec3(x: Double, y: Double, z: Double)
 
-def infixAdd(a: Vec3, b: Vec3): Vec3 = (a, b) match {
+def infixPlus(a: Vec3, b: Vec3): Vec3 = (a, b) match {
   case (Vec3(x1, y1, z1), Vec3(x2, y2, z2)) => Vec3(x1 + x2, y1 + y2, z1 + z2)
 }
-def infixSub(a: Vec3, b: Vec3): Vec3 = (a, b) match {
+def infixMinus(a: Vec3, b: Vec3): Vec3 = (a, b) match {
   case (Vec3(x1, y1, z1), Vec3(x2, y2, z2)) => Vec3(x1 - x2, y1 - y2, z1 - z2)
 }
-def infixMul(v: Vec3, t: Double): Vec3 = v match {
+def infixStar(v: Vec3, t: Double): Vec3 = v match {
   case Vec3(x, y, z) => Vec3(x * t, y * t, z * t)
 }
-def infixMul(t: Double, v: Vec3): Vec3 = v * t
-def infixMul(t: Int, v: Vec3): Vec3 = v * t.toDouble
-def infixMul(v: Vec3, t: Int): Vec3 = v * t.toDouble
+def infixStar(t: Double, v: Vec3): Vec3 = v * t
+def infixStar(t: Int, v: Vec3): Vec3 = v * t.toDouble
+def infixStar(v: Vec3, t: Int): Vec3 = v * t.toDouble
 
-def infixMul(v: Vec3, u: Vec3): Vec3 = Vec3(v.x * u.x, v.y * u.y, v.z * u.z)
+def infixStar(v: Vec3, u: Vec3): Vec3 = Vec3(v.x * u.x, v.y * u.y, v.z * u.z)
 
-def infixDiv(v: Vec3, t: Double): Vec3 = v * (1.0 / t)
-def infixDiv(v: Vec3, t: Int): Vec3 = v * (1.0 / t.toDouble)
+def infixSlash(v: Vec3, t: Double): Vec3 = v * (1.0 / t)
+def infixSlash(v: Vec3, t: Int): Vec3 = v * (1.0 / t.toDouble)
 
 def infixEq(a: Vec3, b: Vec3): Bool = {
   a.x == b.x && a.y == b.y && a.z == b.z
@@ -42,7 +42,7 @@ def dot(a: Vec3, b: Vec3): Double = (a, b) match {
 }
 
 def cross(a: Vec3, b: Vec3): Vec3 = (a, b) match {
-  case (Vec3(x1, y1, z1), Vec3(x2, y2, z2)) => 
+  case (Vec3(x1, y1, z1), Vec3(x2, y2, z2)) =>
     Vec3(y1 * z2 - z1 * y2,
          z1 * x2 - x1 * z2,
          x1 * y2 - y1 * x2)
@@ -50,7 +50,7 @@ def cross(a: Vec3, b: Vec3): Vec3 = (a, b) match {
 
 def unit_vector(v: Vec3): Vec3 = v / v.length
 
-def show(v: Vec3): String = v match {
+def showBuiltin(v: Vec3): String = v match {
   case Vec3(x, y, z) => "(" ++ x.show ++ ", " ++ y.show ++ ", " ++ z.show ++ ")"
 }
 
@@ -83,7 +83,7 @@ def random(min: Double, max: Double): Vec3 / random = {
 }
 
 def random_unit_vector(): Vec3 / random = {
-  var ret = zero() 
+  var ret = zero()
   loop { {l} =>
     val p = random(-1.0, 1.0)
     val lensq = p.length_squared()

@@ -92,7 +92,7 @@ def calculateHit(hittable: Hittable, r: Ray, interval: Interval): Unit / Raytrac
     val h = vec3::dot(r.direction, oc)
     val c = oc.length_squared() - radius * radius
     val discriminant = h * h - a * c
-        
+
     if (discriminant < 0.0) {
       do miss(r)
     } else {
@@ -134,12 +134,12 @@ def calculateHits(list: List[Hittable], r: Ray, interval: Interval): Unit / Rayt
   var closest_so_far = interval.max
 
   list.foreach { hittable => {
-    try { 
+    try {
       hittable.calculateHit(r, Interval(interval.min, closest_so_far))
       ()
     }
     with Raytrace {
-      def hit(rec: HitRecord) = { 
+      def hit(rec: HitRecord) = {
         hit_anything = true
         closest_so_far = rec.t
         temp_rec = rec
@@ -171,7 +171,7 @@ def gradient(r: Ray): Color = {
 
 def constantColor(color: Vec3) { prog: () => Unit / readColor } = {
   try { prog() }
-  with readColor { _ => 
+  with readColor { _ =>
     resume(color)
   }
 }
@@ -179,7 +179,7 @@ def constantColor(color: Vec3) { prog: () => Unit / readColor } = {
 // Returns a gradient from a to b, based on where the ray lands
 def linearGradient(colorA: Color, colorB: Color) { prog: () => Unit / readColor } = {
   try { prog() }
-  with readColor { r => 
+  with readColor { r =>
     val unit_direction = r.direction.unit_vector
     val blendFactor = 0.5 * (unit_direction.y + 1.0)
     resume((1.0 - blendFactor) * colorA + blendFactor * colorB)
@@ -189,7 +189,7 @@ def linearGradient(colorA: Color, colorB: Color) { prog: () => Unit / readColor 
 def randomColor(seed: Int) { prog: () => Unit / readColor } = {
   with minstd(seed)
   try { prog() }
-  with readColor { _ => 
+  with readColor { _ =>
     resume(vec3::random())
   }
 }
@@ -197,18 +197,18 @@ def randomColor(seed: Int) { prog: () => Unit / readColor } = {
 // Consumes the scattered ray and only returns the attenuation of the material
 def noBounce(world: List[Hittable]) { prog: () => Unit / readColor } = {
   try { prog() }
-  with readColor { r => 
+  with readColor { r =>
     try {
       world.calculateHits(r, Interval(0.001, 10000.0))
     } with Raytrace {
-      def hit(rec: HitRecord) = { 
+      def hit(rec: HitRecord) = {
         rec.material.scatter(r, rec) match {
           case Some((attenuation, _)) => resume(attenuation)
           case None() => resume(Vec3(0.0, 0.0, 0.0))
         }
       }
 
-      def miss(ray: Ray) = { 
+      def miss(ray: Ray) = {
         resume(gradient(r))
       }
     }
@@ -217,15 +217,15 @@ def noBounce(world: List[Hittable]) { prog: () => Unit / readColor } = {
 
 // The "normal" raytracing handler, does recursive rays based on the material scattering
 def scatterRays(world: List[Hittable], depth: Int) { prog: () => Unit / readColor }: Unit / { random } = {
-  try { prog() } 
-  with readColor { r => 
+  try { prog() }
+  with readColor { r =>
     if (depth <= 0) {
       resume(Vec3(1.0, 1.0, 1.0))
     } else {
       try {
         world.calculateHits(r, Interval(0.001, 10000.0))
       } with Raytrace {
-        def hit(rec: HitRecord) = { 
+        def hit(rec: HitRecord) = {
           rec.material.scatter(r, rec) match {
             case Some((attenuation, scattered)) => {
               scatterRays(world, depth - 1) { resume(attenuation * do readColor(scattered)) }
@@ -234,7 +234,7 @@ def scatterRays(world: List[Hittable], depth: Int) { prog: () => Unit / readColo
           }
         }
 
-        def miss(ray: Ray) = { 
+        def miss(ray: Ray) = {
           resume(gradient(r))
         }
       }
